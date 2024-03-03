@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import PetsIcon from '@mui/icons-material/Pets';
+import { Stack, IconButton, Container, TextField, List } from '@mui/material';
+import { useState } from 'react';
+import ListItem from './list-item';
 
 const App = () => {
-  const [count, setCount] = useState(0)
+  const [input, setInput] = useState('');
+
+  const [items, setItems] = useState<string[]>([]);
+
+   console.log('items', items);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Container maxWidth={'sm'} disableGutters>
+      <Stack direction={'row'} sx={{ paddingTop: '150px' }} justifyContent={'center'}>
+        <TextField
+          label={'Enter some items to buy'}
+          fullWidth
+          onChange={({ target: { value } }) => setInput(value)
+          }
+          value={input}
+        />
+        <IconButton sx={{ color: 'purple', width: "150px" }} onClick={() => {
+        input.trim().length && setItems([...items, input.trim()])}}>
 
-export default App
+          <PetsIcon fontSize='large' />
+        </IconButton>
+      </Stack>
+      <List>
+        {items.map((value , index) => (<ListItem item={value} key = {index} />))}
+      </List>
+    </Container>
+  );
+};
+export default App;
